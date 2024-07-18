@@ -10,7 +10,7 @@ public class GraphImpl<T> implements Graph<T> {
     private final Set<AbstractEdge<T>> edges = new HashSet<>();
     private final boolean directed;
     
-    protected GraphImpl(boolean directed) {
+    public GraphImpl(boolean directed) {
         this.directed = directed;
     }
     @Override
