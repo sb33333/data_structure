@@ -17,7 +17,7 @@ public class PathSearchUtil<T> {
     private PathFilterCondition<T> filter;
     private Predicate<Path<T>> completeCondition;
     private Predicate<Path<T>> abortCondition;
-    private SearchGoal<T> searchGoal;
+    private final SearchGoal<T> searchGoal;
     private final SearchConditionConfigurer<T> conditionConfigurer;
     private final PathFilterConfigurer<T> pathFilterConfigurer;
 
@@ -33,11 +33,11 @@ public class PathSearchUtil<T> {
         this.s = s;
         this.e = e;
         
-        this.conditionConfigurer = new SearchConditionConfigurer<T>(this, e);
+        this.conditionConfigurer = new SearchConditionConfigurer<>(this, e);
         this.completeCondition = this.conditionConfigurer.alwaysTrue;
         this.abortCondition = conditionConfigurer.terminateWhenFindTargetVertex;
         
-        this.pathFilterConfigurer = new PathFilterConfigurer<T>(this);
+        this.pathFilterConfigurer = new PathFilterConfigurer<>(this);
         this.filter = pathFilterConfigurer.PROHIBIT_SAME_EDGE;
     
         this.searchGoal = (vertex, goal) -> goal.equals(vertex);
@@ -113,7 +113,7 @@ public class PathSearchUtil<T> {
          * @return The current instance of SearchConditionConfigurer.
          */
         public SearchConditionConfigurer<T> setCompleteCondition(Predicate<Path<T>> condition) {
-            this.parent.abortCondition = condition;
+            this.parent.completeCondition = condition;
             return this;
         }
 
@@ -173,7 +173,7 @@ public class PathSearchUtil<T> {
     
     
     public static class PathFilterConfigurer<T> {
-        private PathSearchUtil<T> parent;
+        private final PathSearchUtil<T> parent;
 
         /**
          * Private constructor to initialize the PathFilterConfigurer.
@@ -193,20 +193,18 @@ public class PathSearchUtil<T> {
             path.getVisitedEdges().stream().reduce(
                 pathStart,
                 (vertex, visitedEdge) -> {
-                    subPaths.add(new PathImpl<T>(vertex, List.of(visitedEdge)));
+                    subPaths.add(new PathImpl<>(vertex, List.of(visitedEdge)));
                     return vertex;
                 },
                 (before, after) -> after
             );
-            return subPaths.stream().filter(subPath -> {
-                return (start == subPath.getStart() && edge == subPath.getVisitedEdges().get(0));
-            }).findAny().isEmpty();
+            return subPaths.stream().filter(subPath -> (start == subPath.getStart() && edge == subPath.getVisitedEdges().get(0))).findAny().isEmpty();
         };
         
         /**
          * The same search edge is prohibited.
          */
-        private final PathFilterCondition<T> PROHIBIT_SAME_EDGE = (path, edge, start) -> path.getVisitedEdges().stream().filter(visited -> edge == visited).findAny().isEmpty();
+        private final PathFilterCondition<T> PROHIBIT_SAME_EDGE = (path, edge, start) -> !path.getVisitedEdges().contains(edge);
     
 
         /**

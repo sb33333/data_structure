@@ -43,7 +43,7 @@ public class PathSearch {
     ) {
         return () -> {
           Set<Path<T>> result = new HashSet<>();
-          Consumer<Path<T>> collector = (path) -> result.add(path);
+          Consumer<Path<T>> collector = result::add;
           breadthFirstSearch(graph, start, end, searchGoal, collector, edgeFilter, completeCondition, abortCondition);
           return result;
         };
@@ -73,8 +73,8 @@ public class PathSearch {
     ) {
         return () -> {
           Set<Path<T>> result = new HashSet<>();
-          Consumer<Path<T>> collector = (path) -> result.add(path);
-          recursiveSearch(new PathImpl<T>(start), graph, start, end, searchGoal, collector, edgeFilter, completeCondition, abortCondition);
+          Consumer<Path<T>> collector = result::add;
+          recursiveSearch(new PathImpl<>(start), graph, start, end, searchGoal, collector, edgeFilter, completeCondition, abortCondition);
           return result;
         };
     }
@@ -113,18 +113,16 @@ public class PathSearch {
             return; // abort search
         }
         Set<Edge<T>> connectedEdges = graph.getConnectedEdges(start);
-        if(connectedEdges.size() == 0) {
+        if(connectedEdges.isEmpty()) {
             // System.out.println(3); // TODO debug
             return; // no searchable connection
         }
-        connectedEdges.stream().forEach(connected -> {
-            connected.getAdjacent(start)
-                    .ifPresent(newStart -> {
-                        if(!edgeFilter.test(path, connected, newStart)) return; // break;
-                        Path<T> fork = path.addEdge(connected);
-                        recursiveSearch(fork, graph, newStart, end, searchGoal, pathCollector, edgeFilter, completeCondition, abortCondition);
-                    });
-        });
+        connectedEdges.forEach(connected -> connected.getAdjacent(start)
+                .ifPresent(newStart -> {
+                    if(!edgeFilter.test(path, connected, newStart)) return; // break;
+                    Path<T> fork = path.addEdge(connected);
+                    recursiveSearch(fork, graph, newStart, end, searchGoal, pathCollector, edgeFilter, completeCondition, abortCondition);
+                }));
     }
     
      /**
@@ -151,7 +149,7 @@ public class PathSearch {
         Predicate<Path<T>> abortCondition   
     ) {
         Queue<Path<T>> opened = new LinkedList<>();
-        Path<T> path = new PathImpl<T> (start);
+        Path<T> path = new PathImpl<> (start);
         
         opened.offer(path);
         while (!opened.isEmpty()) {

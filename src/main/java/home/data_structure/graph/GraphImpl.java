@@ -57,8 +57,7 @@ public class GraphImpl<T> implements Graph<T> {
     public boolean isAdjacent(Vertex<T> source, Vertex<T> destination) {
         return edges.parallelStream()
                 .map(edge -> edge.getAdjacent(source))
-                .filter(Optional::isPresent).filter(vertex ->vertex.get().equals(destination))
-                .findAny().isPresent();
+                .filter(Optional::isPresent).anyMatch(vertex ->vertex.get().equals(destination));
     }
     @Override
     public Set<Edge<T>> getConnectedEdges(Vertex<T> vertex) {
@@ -72,7 +71,7 @@ public class GraphImpl<T> implements Graph<T> {
     private void removeConnectedEdges(Vertex<T> vertex) {
         for (Edge<T> edge: edges) {
             if(edge.getSource().equals(vertex) || edge.getDestination().equals(vertex)) {
-                edges.remove(edge);
+                removeEdge(edge);
             }
         }
     }

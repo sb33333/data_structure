@@ -36,7 +36,7 @@ public class PathImpl<T> implements Path<T> {
     public Path<T> addEdge(Edge<T> edge) {
         List<Edge<T>> copied = getVisitedEdges();
         copied.add(edge);
-        return new PathImpl<T>(this.start, copied);
+        return new PathImpl<>(this.start, copied);
     }
     @Override
     public List<Edge<T>> getVisitedEdges() {

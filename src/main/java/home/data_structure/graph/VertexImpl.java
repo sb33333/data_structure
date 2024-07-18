@@ -7,7 +7,7 @@ public class VertexImpl<T> implements Vertex<T> {
         this.value = value;
     }
     public static <T> VertexImpl<T> of (T value) {
-        return new VertexImpl<T> (value);
+        return new VertexImpl<> (value);
     }
     @Override
     public T getValue() {return this.value;}
