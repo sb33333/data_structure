@@ -1,11 +1,22 @@
 package home.data_structure.path_search;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import home.data_structure.graph.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import home.data_structure.graph.*;
+import home.data_structure.graph.Graph;
+import home.data_structure.graph.GraphImpl;
+import home.data_structure.graph.Path;
+import home.data_structure.graph.Vertex;
+import home.data_structure.graph.VertexImpl;
 import home.data_structure.graph.path_search.PathSearchUtil;
 
 public class PathSearchUtilTest {
@@ -67,9 +78,9 @@ public class PathSearchUtilTest {
         result = filterDuplicatePathsByVertexOrder(result);
         List<Path<String>> sorted = result.stream().sorted(Comparator.comparing((Path<String> p) ->{
            return p.getVisitedVertices().toString(); 
-        })).collect(Collectors().toList());
+        })).collect(Collectors.toList());
             
-        for(Path<String> p : result) {
+        for(Path<String> p : sorted) {
             System.out.println(":::"+p);
         }
         Assertions.assertFalse(result.isEmpty());
