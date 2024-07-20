@@ -15,6 +15,7 @@ public class EdgeFactory {
     }
     
     static public <T> Edge<T> createEdge(Vertex<T> source, Vertex<T> destination, boolean directed, double weight) {
+        
         if(directed) return new WeightedDirectedEdge<>(source, destination, weight);
         else return new WeightedUndirectedEdge<>(source, destination, weight);
     }
