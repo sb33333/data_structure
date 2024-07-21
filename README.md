@@ -18,7 +18,7 @@
    * 정점을 연결하는 간선의 집합.
 
 ## 사용
-### PathSearchUtil
+### PathSearcher
 한 정점에서 다른 정점으로 가는 간선의 집합(경로, Path)를 찾습니다.
 검색 시 아래 사항을 지정해야 합니다. 
 * 완료 조건(completeCondition): 경로가 만족해야 하는 조건을 지정합니다.
@@ -29,16 +29,16 @@
   * 예: 같은 간선은 경로에 포함될 수 없음
 
 
-PathSearchUtil.create
+PathSearcher.create
 * 검색을 위한 객체를 생성합니다.
 
-PathSearchUtil.condition
+PathSearcher.condition
 * 완료 조건과 탐색 중지 조건을 설정합니다.
 
-PathSearchUtil.filter
+PathSearcher.filter
 * 간선 조건을 설정합니다.
 
-PathSearchUtil.search
+PathSearcher.search
 * 경로 탐색을 실시합니다.
 
 ## 테스트케이스
