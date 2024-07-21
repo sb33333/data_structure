@@ -2,7 +2,7 @@ package home.data_structure.graph2.edge;
 
 import java.util.Optional;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 
 public class UndirectedEdge<T> extends AbstractEdge<T> {
 

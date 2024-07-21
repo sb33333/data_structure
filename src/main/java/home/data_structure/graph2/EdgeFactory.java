@@ -1,7 +1,7 @@
 package home.data_structure.graph2;
 
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 import home.data_structure.graph2.edge.DirectedEdge;
 import home.data_structure.graph2.edge.UndirectedEdge;
 import home.data_structure.graph2.edge.WeightedDirectedEdge;

@@ -5,7 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 import home.data_structure.graph2.Edge;
 import home.data_structure.graph2.Graph;
 

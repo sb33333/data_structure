@@ -1,7 +1,7 @@
 package home.data_structure.graph2.edge;
 
-import home.data_structure.graph.Vertex;
 import home.data_structure.graph2.Edge;
+import home.data_structure.graph3.Vertex;
 
 public abstract class AbstractEdge<T> implements Edge<T>{
 

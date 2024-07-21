@@ -2,7 +2,7 @@ package home.data_structure.graph2;
 
 import java.util.Optional;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 
 public interface Edge<T> {
 
