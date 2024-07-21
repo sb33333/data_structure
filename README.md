@@ -41,7 +41,7 @@ PathSearchUtil.search
 * 경로 탐색을 실시합니다.
 
 ## 테스트케이스
-<h3><a href="">test class</a></h3>
+<h3><a href="https://github.com/sb33333/data_structure/blob/71d32c44adce3363654415986d2a2d558a90ce5d/src/test/java/home/data_structure/path_search/PathSearcherTest.java">test class</a></h3>
 <a href="https://namu.wiki/w/%EC%BE%A8%EB%8B%88%ED%9E%88%EC%8A%A4%EB%B2%A0%EB%A5%B4%ED%81%AC%20%EB%8B%A4%EB%A6%AC%20%EA%B1%B4%EB%84%88%EA%B8%B0%20%EB%AC%B8%EC%A0%9C">쾨니히스베르크 다리 건너기 문제</a>
 
 
