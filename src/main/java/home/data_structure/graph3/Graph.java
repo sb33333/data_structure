@@ -2,8 +2,6 @@ package home.data_structure.graph3;
 
 import java.util.Set;
 
-import home.data_structure.graph.Vertex;
-
 public interface Graph<T> {
 
     boolean addVertex(Vertex<T> vertex);

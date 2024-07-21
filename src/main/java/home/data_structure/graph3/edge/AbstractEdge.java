@@ -3,7 +3,7 @@ package home.data_structure.graph3.edge;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 import home.data_structure.graph3.Edge;
 
 public abstract class AbstractEdge<T> implements Edge<T> {
@@ -15,11 +15,14 @@ public abstract class AbstractEdge<T> implements Edge<T> {
 
     private final BiFunction<Edge<T>, Vertex<T>, Optional<Vertex<T>>> getAdjacentInternal;
 
+    /**
+     *
+     */
     public AbstractEdge(Vertex<T> source, Vertex<T> destination, boolean directed) {
         this.source = source;
         this.destination = destination;
         this.directed = directed;
-        this.weight = 1;
+        this.weight = 0;
         if (directed) {
             getAdjacentInternal=(edge, vertex) -> {
                 if (vertex.equals(edge.getSource())) return Optional.of(edge.getDestination());

@@ -1,6 +1,6 @@
 package home.data_structure.graph3.edge;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 import home.data_structure.graph3.Edge;
 
 public class EdgeImpl<T> extends AbstractEdge<T>{

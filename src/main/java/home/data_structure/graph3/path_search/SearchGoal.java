@@ -1,6 +1,6 @@
-package home.data_structure.graph.path_search;
+package home.data_structure.graph3.path_search;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 
 /**
  * Functional interface representing a goal-checking condition in a graph search.

@@ -5,14 +5,14 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import home.data_structure.graph.Vertex;
+import home.data_structure.graph3.Vertex;
 import home.data_structure.graph3.Edge;
 import home.data_structure.graph3.Graph;
 
 public abstract class AbstractGraph<T> implements Graph<T> {
 
-    private final Set<Vertex<T>> vertices = new HashSet<>();
-    private final Set<Edge<T>> edges = new HashSet<>();
+    protected final Set<Vertex<T>> vertices = new HashSet<>();
+    protected final Set<Edge<T>> edges = new HashSet<>();
 
     @Override
     public boolean addEdge(Edge<T> edge) {

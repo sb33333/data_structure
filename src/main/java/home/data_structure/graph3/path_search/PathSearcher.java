@@ -1,16 +1,16 @@
-package home.data_structure.graph.path_search;
+package home.data_structure.graph3.path_search;
+
+import home.data_structure.graph3.Graph;
+import home.data_structure.graph3.Path;
+import home.data_structure.graph3.Vertex;
+import home.data_structure.graph3.path.PathImpl;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
+import java.util.List;
 import java.util.function.Predicate;
 
-import home.data_structure.graph.Graph;
-import home.data_structure.graph.Path;
-import home.data_structure.graph.PathImpl;
-import home.data_structure.graph.Vertex;
-
-public class PathSearchUtil<T> {
+public class PathSearcher<T> {
     private final Graph<T> g;
     private final Vertex<T> s;
     private final Vertex<T> e;
@@ -22,37 +22,37 @@ public class PathSearchUtil<T> {
     private final PathFilterConfigurer<T> pathFilterConfigurer;
 
     /**
-     * Private constructor to initialize the PathSearchUtil with a graph and start/end vertices.
+     * Private constructor to initialize the PathSearcher with a graph and start/end vertices.
      *
      * @param g The graph in which to search for paths.
      * @param s The starting vertex for the path search.
      * @param e The ending vertex for the path search.
      */
-    private PathSearchUtil(Graph<T> g, Vertex<T> s, Vertex<T> e) {
+    private PathSearcher(Graph<T> g, Vertex<T> s, Vertex<T> e) {
         this.g = g;
         this.s = s;
         this.e = e;
-        
+
         this.conditionConfigurer = new SearchConditionConfigurer<>(this, e);
         this.completeCondition = this.conditionConfigurer.alwaysTrue;
         this.abortCondition = conditionConfigurer.terminateWhenFindTargetVertex;
-        
+
         this.pathFilterConfigurer = new PathFilterConfigurer<>(this);
         this.filter = pathFilterConfigurer.PROHIBIT_SAME_EDGE;
-    
+
         this.searchGoal = (vertex, goal) -> goal.equals(vertex);
     }
-    
+
     /**
-     * Static factory method to create an instance of PathSearchUtil.
+     * Static factory method to create an instance of PathSearcher.
      *
      * @param g The graph in which to search for paths.
      * @param s The starting vertex for the path search.
      * @param e The ending vertex for the path search.
-     * @return A new instance of PathSearchUtil.
+     * @return A new instance of PathSearcher.
      */
-    public static <T> PathSearchUtil<T> create(Graph<T> g, Vertex<T> s, Vertex<T> e) {
-        return new PathSearchUtil<T>(g, s, e);
+    public static <T> PathSearcher<T> create(Graph<T> g, Vertex<T> s, Vertex<T> e) {
+        return new PathSearcher<>(g, s, e);
     }
 
     /**
@@ -63,14 +63,14 @@ public class PathSearchUtil<T> {
     public Set<Path<T>> search() {
         System.out.println("search()");
         try {
-            return PathSearch.findPathDFS(this.g, this.s, this.e, this.searchGoal, this.filter, this.completeCondition, this.abortCondition).call();
+            return PathSearchUtil.findPathDFS(this.g, this.s, this.e, this.searchGoal, this.filter, this.completeCondition, this.abortCondition).call();
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-     /**
+    /**
      * Provides a way to configure search conditions.
      *
      * @return An instance of SearchConditionConfigurer.
@@ -79,7 +79,7 @@ public class PathSearchUtil<T> {
         return this.conditionConfigurer;
     }
 
-     /**
+    /**
      * Provides a way to configure path filters.
      *
      * @return An instance of PathFilterConfigurer.
@@ -87,25 +87,25 @@ public class PathSearchUtil<T> {
     public PathFilterConfigurer<T> pathFilter() {
         return this.pathFilterConfigurer;
     }
-    
-    
+
+
     public static class SearchConditionConfigurer<T> {
-        private final PathSearchUtil<T> parent;
+        private final PathSearcher<T> parent;
         private final Predicate<Path<T>> alwaysTrue = (t) -> true;
         private final Predicate<Path<T>> terminateWhenFindTargetVertex;
 
         /**
          * Private constructor to initialize the SearchConditionConfigurer.
          *
-         * @param parent The parent PathSearchUtil instance.
+         * @param parent The parent PathSearcher instance.
          * @param end The ending vertex for the path search.
          */
-        private SearchConditionConfigurer (PathSearchUtil<T> parent, Vertex<T> end) {
+        private SearchConditionConfigurer (PathSearcher<T> parent, Vertex<T> end) {
             this.parent = parent;
             this.terminateWhenFindTargetVertex = (path) -> path.getVisitedVertices().contains(end);
-            
+
         }
-        
+
         /**
          * Sets the condition for completing the search.
          *
@@ -117,7 +117,7 @@ public class PathSearchUtil<T> {
             return this;
         }
 
-         /**
+        /**
          * Sets the condition for aborting the search.
          *
          * @param condition The condition to be met for the search to abort.
@@ -149,7 +149,7 @@ public class PathSearchUtil<T> {
             return this;
         }
 
-         /**
+        /**
          * Sets a maximum length for the path to be considered abort.
          *
          * @param maxLength The maximum length of the path.
@@ -160,30 +160,30 @@ public class PathSearchUtil<T> {
             return this;
         }
 
-         /**
-         * Returns to the parent PathSearchUtil instance.
+        /**
+         * Returns to the parent PathSearcher instance.
          *
-         * @return The parent PathSearchUtil instance.
+         * @return The parent PathSearcher instance.
          */
-        public PathSearchUtil<T> and() {
+        public PathSearcher<T> and() {
             return this.parent;
         }
     }
-    
-    
-    
+
+
+
     public static class PathFilterConfigurer<T> {
-        private final PathSearchUtil<T> parent;
+        private final PathSearcher<T> parent;
 
         /**
          * Private constructor to initialize the PathFilterConfigurer.
          *
-         * @param parent The parent PathSearchUtil instance.
+         * @param parent The parent PathSearcher instance.
          */
-        private PathFilterConfigurer(PathSearchUtil<T> parent) {
+        private PathFilterConfigurer(PathSearcher<T> parent) {
             this.parent = parent;
         }
-        
+
         /**
          * The same search path (with identical edges and vertices) is prohibited.
          */
@@ -191,21 +191,21 @@ public class PathSearchUtil<T> {
             List<Path<T>> subPaths = new ArrayList<>();
             Vertex<T> pathStart = path.getStart();
             path.getVisitedEdges().stream().reduce(
-                pathStart,
-                (vertex, visitedEdge) -> {
-                    subPaths.add(new PathImpl<>(vertex, List.of(visitedEdge)));
-                    return vertex;
-                },
-                (before, after) -> after
+                    pathStart,
+                    (vertex, visitedEdge) -> {
+                        subPaths.add(new PathImpl<>(vertex, List.of(visitedEdge)));
+                        return vertex;
+                    },
+                    (before, after) -> after
             );
             return subPaths.stream().filter(subPath -> (start == subPath.getStart() && edge == subPath.getVisitedEdges().get(0))).findAny().isEmpty();
         };
-        
+
         /**
          * The same search edge is prohibited.
          */
         private final PathFilterCondition<T> PROHIBIT_SAME_EDGE = (path, edge, start) -> !path.getVisitedEdges().contains(edge);
-    
+
 
         /**
          * Sets a custom path filter condition.
@@ -216,10 +216,10 @@ public class PathSearchUtil<T> {
         public PathFilterConfigurer<T> filter(PathFilterCondition<T> filter) {
             this.parent. filter= filter;
             return this;
-            
+
         }
 
-         /**
+        /**
          * Prohibits the same search history in the path.
          *
          * @return The current instance of PathFilterConfigurer.
@@ -240,12 +240,12 @@ public class PathSearchUtil<T> {
             return this;
         }
 
-         /**
-         * Returns to the parent PathSearchUtil instance.
+        /**
+         * Returns to the parent PathSearcher instance.
          *
-         * @return The parent PathSearchUtil instance.
+         * @return The parent PathSearcher instance.
          */
-        public PathSearchUtil<T> and() {
+        public PathSearcher<T> and() {
             return this.parent;
         }
     }

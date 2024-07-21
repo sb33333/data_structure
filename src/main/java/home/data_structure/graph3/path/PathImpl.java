@@ -1,16 +1,22 @@
-package home.data_structure.graph;
+package home.data_structure.graph3.path;
+
+
+import home.data_structure.graph3.Edge;
+import home.data_structure.graph3.Path;
+import home.data_structure.graph3.Vertex;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PathImpl<T> implements Path<T> {
-    private final Vertex<T> start;
-    private final List<Edge<T>> edges;
+
+    protected final Vertex<T> start;
+    protected final List<Edge<T>> edges;
+
     public PathImpl(Vertex<T> start) {
         this.start = start;
         edges = new ArrayList<>();
-        
+
     }
     public PathImpl(Vertex<T> start, List<Edge<T>> edges) {
         this.start = start;
@@ -27,9 +33,9 @@ public class PathImpl<T> implements Path<T> {
     @Override
     public Vertex<T> getEnd() {
         return edges.stream().reduce(
-            start,
-            (vertex, edge) -> edge.getAdjacent(vertex).get(),
-            (before, after) -> after
+                start,
+                (vertex, edge) -> edge.getAdjacent(vertex).get(),
+                (before, after) -> after
         );
     }
     @Override
@@ -40,20 +46,20 @@ public class PathImpl<T> implements Path<T> {
     }
     @Override
     public List<Edge<T>> getVisitedEdges() {
-        return edges.stream().collect(Collectors.toList());
+        return new ArrayList<>(edges);
     }
     @Override
     public List<Vertex<T>> getVisitedVertices() {
         List<Vertex<T>> visited = new ArrayList<>();
         visited.add(start);
         edges.stream().reduce(
-            start,
-            (vertex, edge) -> {
-                Vertex<T> next = edge.getAdjacent(vertex).get();
-                visited.add(next);
-                return next;
-            },
-            (before, after) -> after
+                start,
+                (vertex, edge) -> {
+                    Vertex<T> next = edge.getAdjacent(vertex).get();
+                    visited.add(next);
+                    return next;
+                },
+                (before, after) -> after
         );
         return visited;
     }

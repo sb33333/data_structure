@@ -1,4 +1,7 @@
-package home.data_structure.graph.path_search;
+package home.data_structure.graph3.path_search;
+
+import home.data_structure.graph3.*;
+import home.data_structure.graph3.path.PathImpl;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -8,16 +11,11 @@ import java.util.concurrent.Callable;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import home.data_structure.graph.Edge;
-import home.data_structure.graph.Graph;
-import home.data_structure.graph.Path;
-import home.data_structure.graph.PathImpl;
-import home.data_structure.graph.Vertex;
 /**
  * find a path from one vertex to another
  */
-public class PathSearch {
-    private PathSearch() {}  // not allowed
+public class PathSearchUtil {
+    private PathSearchUtil() {}  // not allowed
 
     /**
      * Finds paths using Breadth-First Search (BFS) in the given graph.

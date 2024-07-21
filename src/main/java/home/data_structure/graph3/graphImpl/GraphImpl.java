@@ -9,8 +9,8 @@ public class GraphImpl<T> extends AbstractGraph<T> {
     }
 
     public GraphImpl (Graph<T> graph) {
-        graph.getEdges().forEach(e -> this.addEdge(e));
-        graph.getVertices().forEach(v -> this.addVertex(v));
+        graph.getEdges().forEach(this::addEdge);
+        graph.getVertices().forEach(this::addVertex);
     }
 
 }
