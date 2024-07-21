@@ -49,7 +49,7 @@ PathSearchUtil.search
 * 그래프를 추상 자료형으로 변환, 반대로 변환(행렬, 연결 리스트)
 * 트리 자료구조 구현체 만들어보기
 * 노드 확장 기능 만들기(expand)
-* 맹목적 탐색, 경험적 탐색(미로 탐색)
+* 맹목적 탐색, 경험적 탐색
 * vertex의 getValue는 변경될 수 있음.
 * graph 인터페이스 구조
   * graph interface 아래에 unweightedGraph, weightedGraph
