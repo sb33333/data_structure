@@ -9,13 +9,13 @@ import home.data_structure.graph.Vertex;
 import home.data_structure.graph3.Edge;
 import home.data_structure.graph3.Graph;
 
-public abstract class AbstractGraph<E extends Edge<T>, T> implements Graph<E, T> {
+public abstract class AbstractGraph<T> implements Graph<T> {
 
     private final Set<Vertex<T>> vertices = new HashSet<>();
-    private final Set<E> edges = new HashSet<>();
+    private final Set<Edge<T>> edges = new HashSet<>();
 
     @Override
-    public boolean addEdge(E edge) {
+    public boolean addEdge(Edge<T> edge) {
         return edges.add(edge);
     }
 
@@ -25,7 +25,7 @@ public abstract class AbstractGraph<E extends Edge<T>, T> implements Graph<E, T>
     }
 
     @Override
-    public void removeEdge(E edge) {
+    public void removeEdge(Edge<T> edge) {
        edges.remove(edge); 
     }
 
@@ -36,14 +36,14 @@ public abstract class AbstractGraph<E extends Edge<T>, T> implements Graph<E, T>
     }
 
     @Override
-    public Set<E> getConnectedEdges(Vertex<T> vertex) {
+    public Set<Edge<T>> getConnectedEdges(Vertex<T> vertex) {
         return edges.parallelStream()
                 .filter(edge -> edge.getAdjacent(vertex).isPresent())
                 .collect(Collectors.toSet());
     }
 
     @Override
-    public Set<E> getEdges() {
+    public Set<Edge<T>> getEdges() {
         return edges.parallelStream().collect(Collectors.toSet());
     }
 
@@ -65,10 +65,8 @@ public abstract class AbstractGraph<E extends Edge<T>, T> implements Graph<E, T>
                 .anyMatch(vertex ->vertex.get().equals(destination));
     }
 
-    
-
     private void removeConnectedEdges(Vertex<T> vertex) {
-        for (E edge: edges) {
+        for (Edge<T> edge: edges) {
             if(edge.getSource().equals(vertex) || edge.getDestination().equals(vertex)) {
                 removeEdge(edge);
             }

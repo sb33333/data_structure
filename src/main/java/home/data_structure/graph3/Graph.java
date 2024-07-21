@@ -4,17 +4,17 @@ import java.util.Set;
 
 import home.data_structure.graph.Vertex;
 
-public interface Graph<E extends Edge<T>, T> {
+public interface Graph<T> {
 
     boolean addVertex(Vertex<T> vertex);
-    boolean addEdge(E edge);
+    boolean addEdge(Edge<T> edge);
     void removeVertex(Vertex<T> vertex);
-    void removeEdge(E edge);
+    void removeEdge(Edge<T> edge);
     Set<Vertex<T>> getVertices();
-    Set<E> getEdges();
+    Set<Edge<T>> getEdges();
     boolean hasVertex(Vertex<T> vertex);
     boolean isAdjacent(Vertex<T> source, Vertex<T> destination);
-    Set<E> getConnectedEdges(Vertex<T> vertex);
+    Set<Edge<T>> getConnectedEdges(Vertex<T> vertex);
     
 }
 
