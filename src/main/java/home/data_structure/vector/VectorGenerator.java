@@ -6,7 +6,7 @@ import java.util.Random;
 import java.util.stream.Stream;
 
 public class VectorGenerator {
-    private static Random random;
+    private static final Random random;
     
     static {
         random = new Random();
